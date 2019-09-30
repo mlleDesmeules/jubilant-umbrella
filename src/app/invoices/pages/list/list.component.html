@@ -1,0 +1,68 @@
+<section class="page">
+    <header>
+        <h1 class="title">Invoices</h1>
+        <nav class="breadcrumb is-small is-bottom-aligned" aria-label="breadcrumbs">
+            <ul>
+                <li class="is-active"><a href="#" aria-current="page">invoices</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="details">
+        <a routerLink="invoice/create" class="button is-primary">Create new invoice</a>
+    </div>
+
+    <div class="card">
+        <div class="table-container">
+            <table class="table is-fullwidth">
+                <thead>
+                <tr>
+                    <th>Number</th>
+                    <th>Customer name</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>253</td>
+                    <td>Dummy test</td>
+                    <td>{{ '275' | currency }}</td>
+                    <td>
+                        <span class="tag is-warning">Pending</span>
+                    </td>
+                    <td>
+                        <a routerLink="invoice/253" class="has-border-right">View</a>
+                        <a (click)="deleteInvoice('253')">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>253</td>
+                    <td>Dummy test</td>
+                    <td>{{ '275' | currency }}</td>
+                    <td>
+                        <span class="tag is-warning">Pending</span>
+                    </td>
+                    <td>
+                        <a routerLink="invoice/253" class="has-border-right">View</a>
+                        <a (click)="deleteInvoice('253')">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>253</td>
+                    <td>Dummy test</td>
+                    <td>{{ '275' | currency }}</td>
+                    <td>
+                        <span class="tag is-warning">Pending</span>
+                    </td>
+                    <td>
+                        <a routerLink="invoice/253" class="has-border-right">View</a>
+                        <a (click)="deleteInvoice('253')">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
