@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { InvoicesRoutingModule } from './invoices-routing.module';
 import { ListComponent } from './pages/list/list.component';
+import { DetailComponent } from './pages/detail/detail.component';
 
 @NgModule({
-  declarations: [ListComponent],
+  declarations: [ListComponent, DetailComponent],
   imports: [
     CommonModule,
     InvoicesRoutingModule
