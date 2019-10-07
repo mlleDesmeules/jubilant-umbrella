@@ -8,3 +8,27 @@ $family-sans-serif: "Nunito", sans-serif;
 $card-shadow: 0 4px 20px 1px rgba(0, 0, 0, .06), 0 1px 4px rgba(0, 0, 0, .08);
 
 @import "../node_modules/bulma/bulma";
+@import "../node_modules/bulma-checkradio/src/sass/index";
+
+// global styling
+
+.page header {
+	display: flex;
+	align-items: flex-end;
+
+	margin-bottom: 2em;
+	padding-bottom: 1em;
+
+	border-bottom: 1px solid #dbdbdb;
+
+	& > .title {
+		margin-bottom: 0;
+		margin-right: 1em;
+	}
+}
+
+.page .details {
+	margin-bottom: 2em;
+
+	text-align: right;
+}
