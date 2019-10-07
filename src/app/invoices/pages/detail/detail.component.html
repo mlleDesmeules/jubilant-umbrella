@@ -1,0 +1,157 @@
+<section class="page">
+    <header>
+        <h1 class="title">Invoices</h1>
+        <nav class="breadcrumb is-small is-bottom-aligned" aria-label="breadcrumbs">
+            <ul>
+                <li><a routerLink="">invoices</a></li>
+                <li class="is-active"><a aria-current="page">create</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="details">
+        <a routerLink="" class="button is-light">Back to list</a>
+    </div>
+
+    <div class="card">
+        <div class="card-content">
+            <h3 class="title is-5">Invoice info</h3>
+
+            <div class="columns">
+                <div class="column is-one-third">
+                    <fieldset class="field">
+                        <label for="number">Invoice number</label>
+                        <div class="control">
+                            <input type="text" id="number" name="number" class="input">
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="field">
+                        <label for="date">Invoice date</label>
+                        <div class="control">
+                            <input type="text" id="date" name="date" class="input" placeholder="DD/MM/YYYY">
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="column is-one-third is-offset-one-third">
+                    <fieldset class="field is-aligned-right">
+                        <label>Invoice status</label>
+
+                        <div class="field">
+                            <input class="is-checkradio is-small" id="status-pending" type="radio" name="status">
+                            <label for="status-pending">Pending</label>
+                        </div>
+
+                        <div class="field">
+                            <input class="is-checkradio is-small" id="status-sent" type="radio" name="status">
+                            <label for="status-sent">Sent</label>
+                        </div>
+
+                        <div class="field">
+                            <input class="is-checkradio is-small" id="status-paid" type="radio" name="status">
+                            <label for="status-paid">Paid</label>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="is-divider"></div>
+
+            <div class="columns">
+                <div class="column is-one-third">
+                    <h3 class="title is-5">To</h3>
+
+                    <fieldset class="field">
+                        <div class="control">
+                            <input type="text" id="recipient_name" name="recipient[address]" class="input"
+                                   placeholder="Recipient name">
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="field">
+                        <div class="control">
+                            <textarea type="text" id="recipient_address" name="recipient[address]" class="textarea"
+                                      placeholder="Recipient address" rows="2"></textarea>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="column is-one-third is-offset-one-third is-aligned-right">
+                    <h3 class="title is-5">From</h3>
+
+                    <fieldset class="field">
+                        <div class="control">
+                            <input type="text" id="sender_name" name="sender[address]" class="input"
+                                   placeholder="Sender name">
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="field">
+                        <div class="control">
+                            <textarea type="text" id="sender_address" name="sender[address]" class="textarea"
+                                      placeholder="Sender address" rows="2"></textarea>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="is-divider"></div>
+
+            <div class="table-container">
+                <table class="table is-fullwidth">
+                    <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>Item name</td>
+                        <td>Unit price</td>
+                        <td>Unit</td>
+                        <td>Cost</td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                <fieldset class="field">
+                                    <input type="text" name="item[][name]" class="input" placeholder="Item name">
+                                </fieldset>
+                            </td>
+                            <td>
+                                <fieldset class="field">
+                                    <input type="number" name="item[][price]" class="input" placeholder="Unit price">
+                                </fieldset>
+                            </td>
+                            <td>
+                                <fieldset class="field">
+                                    <input type="number" name="item[][unit]" class="input" placeholder="Number of units">
+                                </fieldset>
+                            </td>
+                            <td>
+                                0
+                            </td>
+                            <td>
+                                <button type="button" class="button is-outlined is-danger">
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button type="button" class="button is-primary">
+                Add item
+            </button>
+
+            <div class="columns">
+                <div class="column is-one-third is-offset-two-thirds is-aligned-right">
+                    <p><span>Sub total</span> 0$</p>
+                    <p><span>Taxes</span> 0$</p>
+                    <p class="title is-6"><span>Total</span> 0$</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
