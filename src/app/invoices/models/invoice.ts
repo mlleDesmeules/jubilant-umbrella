@@ -7,19 +7,45 @@ export class Invoice {
     public date: string;
     public status: number;
 
-    public recipient: Contact;
-    public sender: Contact;
-    public items: InvoiceItem[];
+    private _items: InvoiceItem[] = [];
+    private _recipient: Contact;
+    private _sender: Contact;
 
     constructor(data: Partial<Invoice>) {
         Object.assign(this, data);
+    }
+
+    get items() {
+        return this._items;
+    }
+
+    set items(list) {
+        list.forEach((item) => {
+            this._items.push(new InvoiceItem(item));
+        });
+    }
+
+    get recipient() {
+        return this._recipient;
+    }
+
+    set recipient(data) {
+        this._recipient = new Contact(data);
+    }
+
+    get sender() {
+        return this._sender;
+    }
+
+    set sender(data) {
+        this._sender = new Contact(data);
     }
 
     getSubtotal(): number {
         let result = 0;
 
         this.items.forEach((item) => {
-            result += (item.unitPrice * item.unit);
+            result += item.getTotal();
         });
 
         return result;
