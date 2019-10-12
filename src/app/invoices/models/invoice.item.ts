@@ -8,5 +8,9 @@ export class InvoiceItem {
     constructor(data: Partial<InvoiceItem>) {
         Object.assign(this, data);
     }
+
+    getTotal() {
+        return this.unitPrice * this.unit;
+    }
 }
 

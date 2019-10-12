@@ -83,47 +83,23 @@
                             <td></td>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <fieldset class="field">
-                                    <input type="text" name="item[][name]" class="input" placeholder="Item name">
-                                </fieldset>
-                            </td>
-                            <td>
-                                <fieldset class="field">
-                                    <input type="number" name="item[][price]" class="input" placeholder="Unit price">
-                                </fieldset>
-                            </td>
-                            <td>
-                                <fieldset class="field">
-                                    <input type="number" name="item[][unit]" class="input"
-                                           placeholder="Number of units">
-                                </fieldset>
-                            </td>
-                            <td>
-                                0
-                            </td>
-                            <td>
-                                <button type="button" class="button is-outlined is-danger">
-                                    Remove
-                                </button>
-                            </td>
-                        </tr>
+                        <tbody formArrayName="items">
+                            <tr *ngFor="let item of items.controls; let i=index;" invoice-item
+                                [index]="(i+1)" [form]="item"
+                                (delete)="removeItem(i)"></tr>
                         </tbody>
                     </table>
                 </div>
 
-                <button type="button" class="button is-primary">
+                <button type="button" class="button is-primary" (click)="addItem()">
                     Add item
                 </button>
 
                 <div class="columns">
                     <div class="column is-one-third is-offset-two-thirds is-aligned-right">
-                        <p><span>Sub total</span> 0$</p>
-                        <p><span>Taxes</span> 0$</p>
-                        <p class="title is-6"><span>Total</span> 0$</p>
+                        <p><span>Sub total</span> {{ getSubtotal() | currency }}</p>
+                        <p><span>Taxes</span> {{ getTaxes() | currency }}</p>
+                        <p class="title is-6"><span>Total</span> {{ getTotal() | currency }}</p>
                     </div>
                 </div>
             </form>

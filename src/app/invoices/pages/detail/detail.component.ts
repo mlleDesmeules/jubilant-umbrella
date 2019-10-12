@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector   : 'app-invoice-detail',
@@ -30,6 +30,44 @@ export class DetailComponent implements OnInit {
             }),
             items: this.builder.array([]),
         });
+    }
+
+    get items() {
+        return this.form.get(`items`) as FormArray;
+    }
+
+    addItem() {
+        const group = this.builder.group({
+            name: this.builder.control(``),
+            unit: this.builder.control(0),
+            unitPrice: this.builder.control(0),
+        });
+
+        return this.items.push(group);
+    }
+
+    getSubtotal(): number {
+        let result = 0;
+
+        this.items.controls.forEach((control) => {
+            result += (control.get(`unit`).value * control.get(`unitPrice`).value);
+        });
+
+        return result;
+    }
+
+    getTaxes(): number {
+        const subtotal = this.getSubtotal();
+
+        return subtotal * 0.14;
+    }
+
+    getTotal(): number {
+        return this.getSubtotal() + this.getTaxes();
+    }
+
+    removeItem(index: number) {
+        this.items.removeAt(index);
     }
 
     save() {
