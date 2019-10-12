@@ -39,19 +39,11 @@
                         <fieldset class="field is-aligned-right">
                             <label>Invoice status</label>
 
-                            <div class="field">
-                                <input class="is-checkradio is-small" id="status-pending" type="radio" name="status">
-                                <label for="status-pending">Pending</label>
-                            </div>
-
-                            <div class="field">
-                                <input class="is-checkradio is-small" id="status-sent" type="radio" name="status">
-                                <label for="status-sent">Sent</label>
-                            </div>
-
-                            <div class="field">
-                                <input class="is-checkradio is-small" id="status-paid" type="radio" name="status">
-                                <label for="status-paid">Paid</label>
+                            <div class="field" *ngFor="let status of statuses">
+                                <input type="radio" class="is-checkradio is-small" name="status"
+                                       formControlName="status" [value]="status.id"
+                                       [id]="'status--' + status.label">
+                                <label [for]="'status--' + status.label">{{ status.label }}</label>
                             </div>
                         </fieldset>
                     </div>

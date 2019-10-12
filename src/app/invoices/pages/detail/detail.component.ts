@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { InvoiceStatus, STATUSES } from '../../models';
 
 @Component({
     selector   : 'app-invoice-detail',
@@ -9,17 +10,21 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 export class DetailComponent implements OnInit {
 
     public form: FormGroup;
+    public statuses: InvoiceStatus[] = [];
 
     constructor(private builder: FormBuilder) { }
 
     ngOnInit() {
         this.createForm();
+
+        this.statuses = STATUSES;
     }
 
     createForm() {
         this.form = this.builder.group({
             number   : this.builder.control(``),
             date     : this.builder.control(``),
+            status   : this.builder.control(``),
             recipient: this.builder.group({
                 name   : this.builder.control(``),
                 address: this.builder.control(``),
@@ -37,13 +42,15 @@ export class DetailComponent implements OnInit {
     }
 
     addItem() {
-        const group = this.builder.group({
-            name: this.builder.control(``),
-            unit: this.builder.control(0),
-            unitPrice: this.builder.control(0),
-        });
+        return this.items.push(this.createItem());
+    }
 
-        return this.items.push(group);
+    createItem() {
+        return this.builder.group({
+            name     : this.builder.control(``),
+            unit     : this.builder.control(``),
+            unitPrice: this.builder.control(``),
+        });
     }
 
     getSubtotal(): number {
