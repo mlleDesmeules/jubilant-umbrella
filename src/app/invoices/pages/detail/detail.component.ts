@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { InvoiceStatus, STATUSES } from '../../models';
+import { Invoice, InvoiceItem, InvoiceStatus, STATUSES } from '../../models';
+import { InvoiceService } from '../../services/invoice.service';
 
 @Component({
     selector   : 'app-invoice-detail',
@@ -12,7 +13,8 @@ export class DetailComponent implements OnInit {
     public form: FormGroup;
     public statuses: InvoiceStatus[] = [];
 
-    constructor(private builder: FormBuilder) { }
+    constructor(private builder: FormBuilder,
+                private service: InvoiceService) { }
 
     ngOnInit() {
         this.createForm();
@@ -78,6 +80,8 @@ export class DetailComponent implements OnInit {
     }
 
     save() {
-        console.log(this.form.getRawValue());
+        const invoice = new Invoice(this.form.getRawValue());
+
+        this.service.add(invoice);
     }
 }

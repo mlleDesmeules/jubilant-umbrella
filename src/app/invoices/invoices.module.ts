@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { InvoicesRoutingModule } from './invoices-routing.module';
+
+import { InvoiceService } from './services/invoice.service';
+
 import { ListComponent } from './pages/list/list.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { ContactComponent } from './components/contact/contact.component';
@@ -13,12 +16,15 @@ import { ItemComponent } from './components/item/item.component';
         ListComponent,
         DetailComponent,
         ContactComponent,
-        ItemComponent
+        ItemComponent,
     ],
     imports     : [
         CommonModule,
         ReactiveFormsModule,
         InvoicesRoutingModule,
+    ],
+    providers   : [
+        InvoiceService
     ],
 })
 export class InvoicesModule {}
