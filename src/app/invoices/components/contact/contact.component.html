@@ -1,13 +1,16 @@
-<div [formGroup]="contact">
+<div [formGroup]="form">
     <h3 class="title is-5">{{ title }}</h3>
 
-    <fieldset class="field">
+    <p *ngIf="!isEditing" class="has-margin-bottom">{{ contact?.name }}</p>
+    <p *ngIf="!isEditing">{{ contact?.address }}</p>
+
+    <fieldset class="field" *ngIf="isEditing">
         <div class="control">
             <input type="text" formControlName="name" class="input" placeholder="Name">
         </div>
     </fieldset>
 
-    <fieldset class="field">
+    <fieldset class="field" *ngIf="isEditing">
         <div class="control">
             <textarea type="text" formControlName="address" class="textarea" placeholder="Address" rows="2"></textarea>
         </div>

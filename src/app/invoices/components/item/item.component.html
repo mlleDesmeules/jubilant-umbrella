@@ -1,24 +1,30 @@
 
 <td>{{ index }}</td>
 <td [formGroup]="form">
-    <fieldset class="field">
+    <p *ngIf="!isEditing">{{ item.name }}</p>
+
+    <fieldset *ngIf="isEditing" class="field">
         <input type="text" class="input" formControlName="name" placeholder="Item name">
     </fieldset>
 </td>
 <td [formGroup]="form">
-    <fieldset class="field">
+    <p *ngIf="!isEditing">{{ item.unitPrice | currency }}</p>
+
+    <fieldset *ngIf="isEditing" class="field">
         <input type="number" class="input" formControlName="unitPrice" placeholder="Unit price">
     </fieldset>
 </td>
 <td [formGroup]="form">
-    <fieldset class="field">
+    <p *ngIf="!isEditing">{{ item.unit }}</p>
+
+    <fieldset *ngIf="isEditing" class="field">
         <input type="number" class="input" formControlName="unit" placeholder="Number of units">
     </fieldset>
 </td>
 <td>
-    {{ getTotal() }}
+    {{ getTotal() | currency }}
 </td>
-<td>
+<td *ngIf="isEditing">
     <button type="button" class="button is-outlined is-danger" (click)="removeItem()">
         Delete
     </button>

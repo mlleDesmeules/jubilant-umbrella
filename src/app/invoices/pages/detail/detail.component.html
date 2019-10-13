@@ -12,8 +12,22 @@
     <div class="details">
         <a routerLink="" class="button is-light">Back to list</a>
 
-        <button type="button" class="button is-primary has-margin-left" (click)="save()">
+        <button type="button" class="button is-primary has-margin-left"
+                *ngIf="isCreate" (click)="save()">
             Create
+        </button>
+
+        <button type="button" class="button is-primary is-outlined has-margin-left"
+                *ngIf="!isCreate && !isEditing" (click)="isEditing = true">
+            Edit invoice
+        </button>
+        <button type="button" class="button is-outlined has-margin-left"
+                *ngIf="!isCreate && isEditing" (click)="isEditing = false">
+            Cancel
+        </button>
+        <button type="button" class="button is-primary has-margin-left"
+                *ngIf="!isCreate && isEditing" (click)="save()">
+            Save
         </button>
     </div>
 
@@ -24,14 +38,16 @@
             <form [formGroup]="form" (submit)="save()">
                 <div class="columns">
                     <div class="column is-one-third">
-                        <fieldset class="field">
+                        <p *ngIf="!isEditing">#{{ invoice.number }}</p>
+                        <p *ngIf="!isEditing">{{ invoice.date | date }}</p>
+
+                        <fieldset *ngIf="isEditing" class="field">
                             <label for="number">Invoice number</label>
                             <div class="control">
                                 <input type="text" id="number" formControlName="number" class="input">
                             </div>
                         </fieldset>
-
-                        <fieldset class="field">
+                        <fieldset *ngIf="isEditing" class="field">
                             <label for="date">Invoice date</label>
                             <div class="control">
                                 <input type="text" id="date" formControlName="date" class="input" placeholder="DD/MM/YYYY">
@@ -39,8 +55,15 @@
                         </fieldset>
                     </div>
 
-                    <div class="column is-one-third is-offset-one-third">
-                        <fieldset class="field is-aligned-right">
+                    <div class="column is-one-third is-offset-one-third is-aligned-right">
+                        <p *ngIf="!isEditing" class="tag is-medium"
+                           [class.is-warning]="invoice.isPending()"
+                           [class.is-danger]="invoice.isSent()"
+                           [class.is-success]="invoice.isPaid()">
+                            {{ invoice.getStatus().label | lowercase }}
+                        </p>
+
+                        <fieldset *ngIf="isEditing" class="field is-aligned-right">
                             <label>Invoice status</label>
 
                             <div class="field" *ngFor="let status of statuses">
@@ -57,11 +80,19 @@
 
                 <div class="columns">
                     <div class="column is-one-third" formGroupName="recipient">
-                        <app-invoice-contact title="To" [contact]="form.get('recipient')"></app-invoice-contact>
+                        <app-invoice-contact title="To"
+                                             [form]="form.get('recipient')"
+                                             [contact]="invoice?.recipient"
+                                             [isEditing]="isEditing">
+                        </app-invoice-contact>
                     </div>
 
                     <div class="column is-one-third is-offset-one-third is-aligned-right" formGroupName="sender">
-                        <app-invoice-contact title="From" [contact]="form.get('sender')"></app-invoice-contact>
+                        <app-invoice-contact title="From"
+                                             [form]="form.get('sender')"
+                                             [contact]="invoice?.sender"
+                                             [isEditing]="isEditing">
+                        </app-invoice-contact>
                     </div>
                 </div>
 
@@ -76,12 +107,15 @@
                             <td>Unit price</td>
                             <td>Unit</td>
                             <td>Cost</td>
-                            <td></td>
+                            <td *ngIf="isEditing"></td>
                         </tr>
                         </thead>
                         <tbody formArrayName="items">
                             <tr *ngFor="let item of items.controls; let i=index;" invoice-item
-                                [index]="(i+1)" [form]="item"
+                                [index]="(i+1)"
+                                [form]="item"
+                                [item]="invoice.items[i]"
+                                [isEditing]="isEditing"
                                 (delete)="removeItem(i)"></tr>
                         </tbody>
                     </table>

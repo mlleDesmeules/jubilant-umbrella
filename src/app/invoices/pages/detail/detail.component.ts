@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Invoice, InvoiceItem, InvoiceStatus, STATUSES } from '../../models';
 import { InvoiceService } from '../../services/invoice.service';
 
@@ -10,57 +11,86 @@ import { InvoiceService } from '../../services/invoice.service';
 })
 export class DetailComponent implements OnInit {
 
+    public isEditing: boolean;
+    public isCreate: boolean;
+
+    public invoice: Invoice;
+
     public form: FormGroup;
     public statuses: InvoiceStatus[] = [];
 
     constructor(private builder: FormBuilder,
+                private route: ActivatedRoute,
                 private service: InvoiceService) { }
 
     ngOnInit() {
-        this.createForm();
+        this.isEditing = true;
+        this.isCreate  = true;
 
         this.statuses = STATUSES;
+        this.invoice  = new Invoice({});
+
+        this.createForm();
+
+        this.route.data
+            .subscribe((res) => {
+                if (res.invoice) {
+                    this.isCreate  = false;
+                    this.isEditing = false;
+                    this.invoice   = res.invoice;
+
+                    this.createForm();
+                }
+            });
     }
 
     createForm() {
         this.form = this.builder.group({
-            number   : this.builder.control(``),
-            date     : this.builder.control(``),
-            status   : this.builder.control(``),
+            number   : this.builder.control(this.invoice.number || ``),
+            date     : this.builder.control(this.invoice.date || ``),
+            status   : this.builder.control(this.invoice.status || ``),
             recipient: this.builder.group({
-                name   : this.builder.control(``),
-                address: this.builder.control(``),
+                name   : this.builder.control(this.invoice.recipient.name || ``),
+                address: this.builder.control(this.invoice.recipient.address || ``),
             }),
             sender   : this.builder.group({
-                name   : this.builder.control(``),
-                address: this.builder.control(``),
+                name   : this.builder.control(this.invoice.sender.name || ``),
+                address: this.builder.control(this.invoice.sender.address || ``),
             }),
             items: this.builder.array([]),
         });
+
+        this.invoice.items.forEach((item) => { this.addItem(item); });
     }
 
     get items() {
         return this.form.get(`items`) as FormArray;
     }
 
-    addItem() {
-        return this.items.push(this.createItem());
+    addItem(item ?: InvoiceItem) {
+        item = item || new InvoiceItem({});
+
+        return this.items.push(this.createItem(item));
     }
 
-    createItem() {
+    createItem(item: InvoiceItem) {
         return this.builder.group({
-            name     : this.builder.control(``),
-            unit     : this.builder.control(``),
-            unitPrice: this.builder.control(``),
+            name     : this.builder.control(item.name),
+            unit     : this.builder.control(item.unit),
+            unitPrice: this.builder.control(item.unitPrice),
         });
     }
 
     getSubtotal(): number {
         let result = 0;
 
-        this.items.controls.forEach((control) => {
-            result += (control.get(`unit`).value * control.get(`unitPrice`).value);
-        });
+        if (this.isEditing) {
+            this.items.controls.forEach((control) => {
+                result += (control.get(`unit`).value * control.get(`unitPrice`).value);
+            });
+        } else {
+            result = this.invoice.getSubtotal();
+        }
 
         return result;
     }

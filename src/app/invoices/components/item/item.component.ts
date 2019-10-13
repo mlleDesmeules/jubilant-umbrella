@@ -9,6 +9,7 @@ import { InvoiceItem } from '../../models';
 })
 export class ItemComponent implements OnInit {
 
+    @Input() isEditing: boolean;
     @Input() item: InvoiceItem;
     @Input() index: number;
     @Input() form: FormGroup | AbstractControl;
@@ -21,7 +22,11 @@ export class ItemComponent implements OnInit {
     }
 
     getTotal() {
-        return this.form.get(`unit`).value * this.form.get(`unitPrice`).value;
+        if (this.isEditing) {
+            return this.form.get(`unit`).value * this.form.get(`unitPrice`).value;
+        } else {
+            return this.item.getTotal();
+        }
     }
 
     removeItem() {

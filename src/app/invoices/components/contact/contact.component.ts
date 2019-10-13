@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { Contact } from '../../models';
 
 @Component({
     selector   : 'app-invoice-contact',
@@ -9,7 +10,10 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 export class ContactComponent {
 
     @Input() title: string;
-    @Input() contact: FormGroup | AbstractControl;
+    @Input() form: FormGroup | AbstractControl;
+
+    @Input() contact: Contact;
+    @Input() isEditing: boolean;
 
     constructor() { }
 

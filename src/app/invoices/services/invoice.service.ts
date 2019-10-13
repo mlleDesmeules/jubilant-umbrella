@@ -79,9 +79,14 @@ export class InvoiceService {
      * This method will get the invoices saved, map them to be actual Invoice and then return
      * the list.
      */
-    public get(): Invoice[] {
-        const list = InvoiceService.getStorage();
+    public get(id ?: number) {
+        const list = InvoiceService.getStorage()
+                                   .map((invoice) => new Invoice(invoice));
 
-        return list.map((invoice) => new Invoice(invoice));
+        if (typeof id === `undefined`) {
+            return list;
+        }
+
+        return list.filter((invoice) => invoice.id === id)[0];
     }
 }

@@ -5,6 +5,7 @@ import { DetailComponent } from './pages/detail/detail.component';
 import { ListComponent } from './pages/list/list.component';
 
 import { ListResolverService } from './services/list-resolver.service';
+import { DetailResolverService } from './services/detail-resolver.service';
 
 const routes: Routes = [
     {
@@ -14,6 +15,10 @@ const routes: Routes = [
     }, {
         path     : `create`,
         component: DetailComponent,
+    }, {
+        path     : `invoice/:id`,
+        component: DetailComponent,
+        resolve  : { invoice: DetailResolverService },
     },
 ];
 

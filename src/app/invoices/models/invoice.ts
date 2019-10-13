@@ -15,9 +15,9 @@ export class Invoice {
     constructor(data: Partial<Invoice>) {
         Object.assign(this, data);
 
-        this.setItems(data.items);
-        this.setRecipient(data.recipient);
-        this.setSender(data.sender);
+        this.setItems(data.items || []);
+        this.setRecipient(data.recipient || {});
+        this.setSender(data.sender || {});
     }
 
     getSubtotal(): number {
