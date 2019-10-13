@@ -12,6 +12,14 @@
 	td:last-of-type {
 		width: 12rem;
 	}
+
+	td.is-empty {
+		padding: 1rem;
+		text-align: center;
+		font-size: smaller;
+		font-style: italic;
+		color: hsl(0, 0%, 48%);
+	}
 }
 
 .has-border-right {

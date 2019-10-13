@@ -43,6 +43,10 @@
                         <a (click)="deleteInvoice(invoice.id)">Delete</a>
                     </td>
                 </tr>
+
+                <tr *ngIf="list.length === 0">
+                    <td colspan="5" class="is-empty"> There is no data at the moment </td>
+                </tr>
                 </tbody>
             </table>
         </div>
