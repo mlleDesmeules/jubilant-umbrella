@@ -25,40 +25,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>253</td>
-                    <td>Dummy test</td>
-                    <td>{{ '275' | currency }}</td>
+                <tr *ngFor="let invoice of list">
+                    <td>{{ invoice.number }}</td>
+                    <td>{{ invoice.recipient.name }}</td>
+                    <td>{{ invoice.getTotal() | currency }}</td>
                     <td>
-                        <span class="tag is-warning">Pending</span>
+                        {{ invoice.status }}
+                        <span class="tag"
+                              [class.is-warning]="invoice.isPending()"
+                              [class.is-danger]="invoice.isSent()"
+                              [class.is-success]="invoice.isPaid()">
+                            {{ invoice.getStatus()?.label }}
+                        </span>
                     </td>
                     <td>
-                        <a routerLink="invoice/253" class="has-border-right">View</a>
-                        <a (click)="deleteInvoice('253')">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>253</td>
-                    <td>Dummy test</td>
-                    <td>{{ '275' | currency }}</td>
-                    <td>
-                        <span class="tag is-warning">Pending</span>
-                    </td>
-                    <td>
-                        <a routerLink="invoice/253" class="has-border-right">View</a>
-                        <a (click)="deleteInvoice('253')">Delete</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>253</td>
-                    <td>Dummy test</td>
-                    <td>{{ '275' | currency }}</td>
-                    <td>
-                        <span class="tag is-warning">Pending</span>
-                    </td>
-                    <td>
-                        <a routerLink="invoice/253" class="has-border-right">View</a>
-                        <a (click)="deleteInvoice('253')">Delete</a>
+                        <a [routerLink]="[ 'invoice', invoice.id ]" class="has-border-right">View</a>
+                        <a (click)="deleteInvoice(invoice.id)">Delete</a>
                     </td>
                 </tr>
                 </tbody>

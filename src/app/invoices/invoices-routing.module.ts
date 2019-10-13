@@ -4,14 +4,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { DetailComponent } from './pages/detail/detail.component';
 import { ListComponent } from './pages/list/list.component';
 
+import { ListResolverService } from './services/list-resolver.service';
+
 const routes: Routes = [
     {
-        path: ``,
+        path     : ``,
         component: ListComponent,
+        resolve  : { list: ListResolverService },
     }, {
-        path: `create`,
+        path     : `create`,
         component: DetailComponent,
-    }
+    },
 ];
 
 @NgModule({

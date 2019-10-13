@@ -60,4 +60,10 @@ export class InvoiceService {
 
         InvoiceService.updateStorage(list);
     }
+
+    public get(): Invoice[] {
+        const list = InvoiceService.getStorage();
+
+        return list.map((invoice) => new Invoice(invoice));
+    }
 }

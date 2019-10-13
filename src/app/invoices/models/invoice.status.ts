@@ -6,6 +6,10 @@ export class InvoiceStatus {
     constructor(data: Partial<InvoiceStatus>) {
         Object.assign(this, data);
     }
+
+    is(name): boolean {
+        return this.label.toLowerCase() === name.toLowerCase();
+    }
 }
 
 export const STATUSES = [

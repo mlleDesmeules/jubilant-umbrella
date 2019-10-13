@@ -8,6 +8,10 @@
 	td:nth-of-type(3) {
 		text-align: right;
 	}
+
+	td:last-of-type {
+		width: 12rem;
+	}
 }
 
 .has-border-right {
