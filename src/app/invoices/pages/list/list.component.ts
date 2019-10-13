@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { Invoice } from '../../models';
+import { InvoiceService } from '../../services/invoice.service';
 
 @Component({
     selector   : 'app-list',
@@ -11,7 +13,8 @@ export class ListComponent implements OnInit {
 
     public list: Invoice[] = [];
 
-    constructor(private route: ActivatedRoute) { }
+    constructor(private route: ActivatedRoute,
+                private service: InvoiceService) { }
 
     ngOnInit() {
         this.route.data
@@ -21,6 +24,8 @@ export class ListComponent implements OnInit {
     }
 
     deleteInvoice(invoiceID) {
+        this.service.delete(invoiceID);
 
+        this.list = this.service.get();
     }
 }

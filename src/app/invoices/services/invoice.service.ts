@@ -61,6 +61,24 @@ export class InvoiceService {
         InvoiceService.updateStorage(list);
     }
 
+    /**
+     * Delete
+     *
+     * This method will remove the invoice with the passed ID from the list and then resave
+     * the list.
+     */
+    public delete(invoiceID: number) {
+        const list = this.get().filter((invoice) => invoice.id !== invoiceID);
+
+        InvoiceService.updateStorage(list);
+    }
+
+    /**
+     * Get
+     *
+     * This method will get the invoices saved, map them to be actual Invoice and then return
+     * the list.
+     */
     public get(): Invoice[] {
         const list = InvoiceService.getStorage();
 
