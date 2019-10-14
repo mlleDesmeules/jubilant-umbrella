@@ -13,11 +13,7 @@ export class Invoice {
     public sender: Contact;
 
     constructor(data: Partial<Invoice>) {
-        Object.assign(this, data);
-
-        this.setItems(data.items || []);
-        this.setRecipient(data.recipient || {});
-        this.setSender(data.sender || {});
+        this.setData(data);
     }
 
     getSubtotal(): number {
@@ -54,6 +50,14 @@ export class Invoice {
 
     isPaid(): boolean {
         return this.getStatus().is(`Paid`);
+    }
+
+    setData(data: Partial<Invoice>) {
+        Object.assign(this, data);
+
+        this.setItems(data.items || []);
+        this.setRecipient(data.recipient || {});
+        this.setSender(data.sender || {});
     }
 
     setItems(list) {

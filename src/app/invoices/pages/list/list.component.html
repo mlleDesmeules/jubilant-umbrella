@@ -26,11 +26,10 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let invoice of list">
-                    <td>{{ invoice.number }}</td>
+                    <td>#{{ invoice.number }}</td>
                     <td>{{ invoice.recipient.name }}</td>
                     <td>{{ invoice.getTotal() | currency }}</td>
                     <td>
-                        {{ invoice.status }}
                         <span class="tag"
                               [class.is-warning]="invoice.isPending()"
                               [class.is-danger]="invoice.isSent()"

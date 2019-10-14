@@ -110,8 +110,16 @@ export class DetailComponent implements OnInit {
     }
 
     save() {
-        const invoice = new Invoice(this.form.getRawValue());
+        if (this.isCreate) {
+            const invoice = new Invoice(this.form.getRawValue());
 
-        this.service.add(invoice);
+            this.service.add(invoice);
+        } else {
+            this.invoice.setData(this.form.getRawValue());
+
+            this.service.update(this.invoice.id, this.invoice);
+
+            this.isEditing = false
+        }
     }
 }

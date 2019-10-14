@@ -89,4 +89,21 @@ export class InvoiceService {
 
         return list.filter((invoice) => invoice.id === id)[0];
     }
+
+    /**
+     * Update
+     *
+     * This method will update a specific invoice object and save it properly.
+     */
+    public update(invoiceID: number, invoice: Invoice) {
+        const list = this.get().map((current) => {
+            if (current.id === invoiceID) {
+                return invoice;
+            } else {
+                return current;
+            }
+        });
+
+        InvoiceService.updateStorage(list);
+    }
 }
